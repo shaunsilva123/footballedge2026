@@ -1634,15 +1634,23 @@ function submitEmail(){
   btn.disabled = true;
   btn.textContent = '✓ Got it — loading your access...';
 
-  // Optional: send to a webhook/email service
-  // Uncomment and replace URL to connect Mailchimp, ConvertKit, Loops etc.
-  /*
-  fetch('https://YOUR_EMAIL_SERVICE_WEBHOOK', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({email, source:'footballedge2026', date: new Date().toISOString()})
-  }).catch(()=>{});
-  */
+  // Send to Loops — replace YOUR_LOOPS_API_KEY with your key from app.loops.so/settings?page=api
+  const LOOPS_API_KEY = 'YOUR_LOOPS_API_KEY';
+  if(LOOPS_API_KEY !== 'YOUR_LOOPS_API_KEY'){
+    fetch('https://app.loops.so/api/v1/contacts/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${LOOPS_API_KEY}`
+      },
+      body: JSON.stringify({
+        email,
+        source: 'footballedge2026',
+        subscribed: true,
+        userGroup: 'free-access',
+      })
+    }).catch(()=>{});
+  }
 
   // Show success message briefly then launch app
   document.getElementById('email-modal-body').innerHTML = `
