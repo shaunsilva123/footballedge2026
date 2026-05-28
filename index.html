@@ -1634,9 +1634,9 @@ function submitEmail(){
   btn.disabled = true;
   btn.textContent = '✓ Got it — loading your access...';
 
-  // Send to Loops — replace 99b0135433971ddc9973669c08eac17c with your key from app.loops.so/settings?page=api
+  // Send to Loops
   const LOOPS_API_KEY = '99b0135433971ddc9973669c08eac17c';
-  if(LOOPS_API_KEY !== '99b0135433971ddc9973669c08eac17c'){
+  if(LOOPS_API_KEY){
     fetch('https://app.loops.so/api/v1/contacts/create', {
       method: 'POST',
       headers: {
