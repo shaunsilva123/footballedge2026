@@ -1183,7 +1183,7 @@ body {
           <li class="on"><span class="check">✓</span> Priority support</li>
         </ul>
         <div id="pricing-cta-wrap">
-          <a class="price-cta primary stripe-btn" href="https://buy.stripe.com/YOUR_STRIPE_LINK" target="_blank">Get Tournament Pass</a>
+          <a class="price-cta primary stripe-btn" href="https://buy.stripe.com/4gMeVegko2A29e1duF9MY00" target="_blank">Get Tournament Pass</a>
         </div>
       </div>
     </div>
@@ -1634,9 +1634,9 @@ function submitEmail(){
   btn.disabled = true;
   btn.textContent = '✓ Got it — loading your access...';
 
-  // Send to Loops — replace YOUR_LOOPS_API_KEY with your key from app.loops.so/settings?page=api
-  const LOOPS_API_KEY = 'YOUR_LOOPS_API_KEY';
-  if(LOOPS_API_KEY !== 'YOUR_LOOPS_API_KEY'){
+  // Send to Loops — replace 99b0135433971ddc9973669c08eac17c with your key from app.loops.so/settings?page=api
+  const LOOPS_API_KEY = '99b0135433971ddc9973669c08eac17c';
+  if(LOOPS_API_KEY !== '99b0135433971ddc9973669c08eac17c'){
     fetch('https://app.loops.so/api/v1/contacts/create', {
       method: 'POST',
       headers: {
@@ -2529,7 +2529,7 @@ function setBetResult(id,result){
 // From June 14th onwards: paywall goes live.
 // ═══════════════════════════════════════════════════════════
 const PAYWALL_DATE = new Date('2026-06-14T00:00:00');
-const STRIPE_LINK  = 'https://buy.stripe.com/YOUR_STRIPE_LINK'; // ← replace this
+const STRIPE_LINK  = 'https://buy.stripe.com/4gMeVegko2A29e1duF9MY00'; // ← replace this
 
 function isPaidPhase(){
   return new Date() >= PAYWALL_DATE;
