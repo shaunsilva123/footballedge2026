@@ -2022,16 +2022,28 @@ function showTeamModal(id){
       </div>`).join('')}
     <div class="section-title">Notes</div>
     <div style="background:var(--surface);border-radius:8px;padding:12px;border:1px solid var(--border);font-size:12px;color:var(--gray1);line-height:1.7;margin-bottom:14px">${t.notes}</div>
+    <div class="section-title">Betting Indicators</div>
     <div style="display:flex;gap:6px;margin-bottom:14px">
-      ${[
-        {l:'Over 2.5?',v:t.gpg+gcpg>3.2?'Yes ✓':'Unlikely',on:t.gpg+gcpg>3.2},
-        {l:'BTTS?',v:t.gpg>1.8&&gcpg>0.9?'Strong':'Lower',on:t.gpg>1.8&&gcpg>0.9},
-        {l:'Clean sheet?',v:((t.cs/t.gms)>0.35?'Good':'Lower'),on:(t.cs/t.gms)>0.35},
-      ].map(b=>`
-        <div style="flex:1;background:${b.on?'rgba(0,230,118,0.08)':'var(--surface2)'};border:1px solid ${b.on?'rgba(0,230,118,0.25)':'var(--border)'};border-radius:8px;padding:8px;text-align:center">
-          <div style="font-size:8px;color:var(--gray2);margin-bottom:3px">${b.l}</div>
-          <div style="font-size:12px;font-weight:700;color:${b.on?'var(--accent)':'var(--white)'}">${b.v}</div>
-        </div>`).join('')}
+      ${(()=>{
+        const combinedGPG = t.gpg + gcpg;
+        const ov25Pct = Math.round(Math.min(95, Math.max(5, (combinedGPG / 4.5) * 100)));
+        const bttsPct = Math.round(Math.min(95, Math.max(5, ((t.gpg / 2.5) * 50) + ((gcpg / 1.5) * 50))));
+        const csPct = Math.round(Math.min(95, Math.max(5, (t.cs / t.gms) * 100)));
+        return [
+          {l:'Over 2.5 Goals',pct:ov25Pct},
+          {l:'BTTS',pct:bttsPct},
+          {l:'Clean Sheet',pct:csPct},
+        ].map(b=>{
+          const likely = b.pct >= 50;
+          const color = b.pct >= 65 ? 'var(--accent)' : b.pct >= 50 ? 'var(--gold)' : b.pct >= 35 ? 'var(--gray1)' : 'var(--red)';
+          return `
+            <div style="flex:1;background:${likely?'rgba(0,230,118,0.06)':'var(--surface2)'};border:1px solid ${likely?'rgba(0,230,118,0.2)':'var(--border)'};border-radius:8px;padding:10px;text-align:center">
+              <div style="font-size:8px;color:var(--gray2);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px">${b.l}</div>
+              <div style="font-size:18px;font-weight:900;color:${color};margin-bottom:2px">${b.pct}%</div>
+              <div style="font-size:9px;font-weight:700;color:${color}">${likely?'Likely':'Unlikely'}</div>
+            </div>`;
+        }).join('');
+      })()}
     </div>
     <div class="rg-banner">⚠️ Gamble Responsibly · 18+ · BeGambleAware.org</div>`;
 
