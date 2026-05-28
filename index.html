@@ -1634,23 +1634,12 @@ function submitEmail(){
   btn.disabled = true;
   btn.textContent = '✓ Got it — loading your access...';
 
-  // Send to Loops
-  const LOOPS_API_KEY = '99b0135433971ddc9973669c08eac17c';
-  if(LOOPS_API_KEY){
-    fetch('https://app.loops.so/api/v1/contacts/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${LOOPS_API_KEY}`
-      },
-      body: JSON.stringify({
-        email,
-        source: 'footballedge2026',
-        subscribed: true,
-        userGroup: 'free-access',
-      })
-    }).catch(()=>{});
-  }
+  // Send to Loops via proxy (avoids CORS)
+  fetch('https://footballedge-proxy.vercel.app/api/subscribe', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email})
+  }).catch(()=>{});
 
   // Show success message briefly then launch app
   document.getElementById('email-modal-body').innerHTML = `
